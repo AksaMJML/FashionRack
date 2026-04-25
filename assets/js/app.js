@@ -14,6 +14,31 @@ fetch("components/home/home.html")
     })
 
 
+function loadProducts(){
+    const container = document.getElementById("product-list");
+    let htmlString = "";
+
+    inventory.forEach(item => {
+        htmlString += `
+      <div class="col">
+        <div class="card shadow-sm">
+          <img src="${item.image}" class="card-img-top" alt="Product Image">
+          <div class="card-body">
+            <h5 class="card-title"> ${item.name} </h5>
+            <p class="card-text">Price: $${item.price.toFixed(2)}</p>
+            <button class="btn btn-dark w-100" onclick="addToCart(${item.id})">Add to Cart</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    `;
+    });
+
+    container.innerHTML = htmlString;
+}
+
+loadProducts();
+
 let inventory = [
   {
     id: 1,
