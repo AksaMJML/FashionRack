@@ -1,47 +1,39 @@
-<div id="carouselExampleFade" class="carousel slide carousel-fade">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="assets/img/cover1.png" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="assets/img/cover2.png" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="assets/img/cover3.png" class="d-block w-100" alt="...">
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
-
 <main>
-  <section class="py-5 text-center container">
-    <div class="row py-lg-5">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-light">Welcome to Fashion Rack</h1>
+  <div class="album py-4 bg-body-tertiary">
+        <div class="container-fluid px-4">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3 class="mb-3">Select Products</h3>
+                </div>
+                <div class="col-md-4 d-none d-md-block">
+                    <h3 class="mb-3 opacity-0">Select Products</h3>
+                </div>
+            </div>
 
-        <p class="lead text-body-secondary">
-          Discover your next favorite outfit. Explore our curated collection of premium dresses, tops, and everyday
-          essentials designed for your unique style.
-        </p>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="product-list"></div>
+                </div>
 
-        <p>
-          <a href="#product-list" class="btn btn-dark my-2">Shop Collection</a>
-        </p>
-      </div>
-    </div>
-  </section>
-  <div class="album py-5 bg-body-tertiary">
-    <div class="container">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 justify-content-center"
-        id="product-list">
-      </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm sticky-top" style="top: 20px;">
+                <div class="card-header bg-dark text-white">
+                    <h4 class="mb-0">Current Order</h4>
+                </div>
+                <div class="card-body" style="min-height: 300px;" id="cart-items">
+                    <p class="text-muted text-center mt-5">No items in cart</p>
+                </div>
+                <div class="card-footer bg-white">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Total:</h5>
+                        <h4 class="mb-0 text-success">$<span id="cart-total">0.00</span></h4>
+                    </div>
+                                        <button class="btn btn-dark w-100 py-2 fs-5">Pay & Print Receipt</button>
+                </div>
+            </div>
+        </div>
+
+            </div>
     </div>
   </div>
 </main>
