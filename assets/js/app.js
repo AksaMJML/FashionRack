@@ -125,5 +125,30 @@ function loadProducts(){
 
 loadProducts();
 
+function filterProducts(categoryName) {
+    const container = document.getElementById("product-list");
+    let htmlString = "";
+
+    let filteredItems = inventory.filter(item => item.category === categoryName);
+
+    filteredItems.forEach(item => {
+        htmlString += `
+          <div class="col">
+            <div class="card shadow-sm product-card"> 
+              <img src="${item.image}" class="card-img-top product-img" alt="${item.name}">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title"> ${item.name} </h5>
+                <p class="card-text">Price: $${item.price.toFixed(2)}</p>
+                <button class="btn btn-dark w-100 mt-auto" onclick="addToCart(${item.id})">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        `;
+    });
+
+    // 3. Screen-la update panrom
+    container.innerHTML = htmlString;
+}
+
 let cart = [ ];
 
