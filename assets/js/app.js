@@ -101,37 +101,25 @@ let inventory = [
 
 
 function loadProducts(){
-    const container = document.getElementById("product-list");
-    let htmlString = "";
-
-    inventory.forEach(item => {
-        htmlString += `
-      <div class="col">
-        <div class="card shadow-sm product-card">
-          <img src="${item.image}" class="card-img-top product-img" alt="Product Image">
-          <div class="card-body">
-            <h5 class="card-title"> ${item.name} </h5>
-            <p class="card-text">Price: $${item.price.toFixed(2)}</p>
-            <button class="btn btn-dark w-100" onclick="addToCart(${item.id})">Add to Cart</button>
-          </div>
-          </div>
-        </div>
-      </div>
-    `;
-    });
-
-    container.innerHTML = htmlString;
+    renderProducts(inventory);
 }
 
 loadProducts();
 
 function filterProducts(categoryName) {
+    const selectedCategory = (categoryName || "").trim().toUpperCase();
+    const filteredItems = selectedCategory && selectedCategory !== "ALL"
+        ? inventory.filter(item => item.category === selectedCategory)
+        : inventory;
+
+    renderProducts(filteredItems);
+}
+
+function renderProducts(items) {
     const container = document.getElementById("product-list");
     let htmlString = "";
 
-    let filteredItems = inventory.filter(item => item.category === categoryName);
-
-    filteredItems.forEach(item => {
+    items.forEach(item => {
         htmlString += `
           <div class="col">
             <div class="card shadow-sm product-card"> 
@@ -146,9 +134,18 @@ function filterProducts(categoryName) {
         `;
     });
 
-    // 3. Screen-la update panrom
-    container.innerHTML = htmlString;
+    container.innerHTML = htmlString || '<p class="text-muted">No products found for this category.</p>';
 }
+
+document.addEventListener("click", (event) => {
+    const filterElement = event.target.closest("[data-category-filter]");
+    if (!filterElement) {
+        return;
+    }
+
+    event.preventDefault();
+    filterProducts(filterElement.dataset.categoryFilter);
+});
 
 let cart = [ ];
 
