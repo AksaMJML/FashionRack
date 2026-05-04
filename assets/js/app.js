@@ -5,6 +5,7 @@ fetch("components/navBar/navbar.html")
     .then(response => response.text())
     .then(data => {
         navBar.innerHTML += data;
+        populateCategoryMenu();
     })
 
 fetch("components/home/home.html")
@@ -148,4 +149,22 @@ document.addEventListener("click", (event) => {
 });
 
 let cart = [ ];
+
+function populateCategoryMenu() {
+  // Extract unique categories from inventory
+  const uniqueCategories = [...new Set(inventory.map(item => item.category))].sort();
+  
+  // Get the first category menu (CLOTHING section)
+  const categoryMenu = document.getElementById("category-menu");
+  
+  if (!categoryMenu) return;
+  
+  // Create HTML for each unique category
+  const categoryHtml = uniqueCategories
+    .map(category => `<li><a class='dropdown-item' href='#' onclick='filterProducts("${category}")'>${category}</a></li>`)
+    .join("");
+  
+  // Replace the existing menu items with the generated ones
+  categoryMenu.innerHTML = categoryHtml;
+}
 
