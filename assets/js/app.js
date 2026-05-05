@@ -15,6 +15,13 @@ fetch("components/home/home.html")
         loadProducts();
     })
 
+let footerElement = document.getElementById("footer");
+
+fetch("components/footer/footer.html")
+    .then(response => response.text())
+    .then(data => {
+        footerElement.innerHTML += data;
+    });
 
 let inventory = [
   {
