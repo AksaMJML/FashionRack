@@ -162,7 +162,7 @@ function populateCategoryMenu() {
   const uniqueCategories = [...new Set(inventory.map(item => item.category))].sort();
   
   // Get the first category menu (CLOTHING section)
-  const categoryMenu = document.getElementById("category-menu");
+  const categoryMenu = document.getElementById("clothing-menu");
   
   if (!categoryMenu) return;
   
