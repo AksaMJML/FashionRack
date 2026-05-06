@@ -158,20 +158,35 @@ document.addEventListener("click", (event) => {
 let cart = [ ];
 
 function populateCategoryMenu() {
-  // Extract unique categories from inventory
-  const uniqueCategories = [...new Set(inventory.map(item => item.category))].sort();
+
+  const clothingList = ["TOPS" , "SHIRTS" , "JEANS", "SKIRTS", "BLAZERS", "SHORTS"];
+  const accessoriesList = ["JEWELLERY", "WATCHES", "HAIR ACCESSORIES", "WALLETS", "SUNGLASSES"];
+  const bagsShoesList = ["BAGS" , "SHOES"];
   
-  // Get the first category menu (CLOTHING section)
-  const categoryMenu = document.getElementById("clothing-menu");
+  const inventoryCategories = [...new Set(inventory.map(item => item.category))];
   
-  if (!categoryMenu) return;
+
+  function buildMenu(menuId, expectedList, title) {
+        const menuElement = document.getElementById(menuId);
+        if (!menuElement) return;
+
+  const availableCategories = expectedList.filter(cat => inventoryCategories.includes(cat));
+
+  let html = `
+            <li><a class='dropdown-item fw-bold text-primary' href='#' onclick='filterProducts("ALL")'>ALL ${title}</a></li>
+            <li><hr class="dropdown-divider"></li>
+        `;
+
+  availableCategories.forEach(category => {
+            html += `<li><a class='dropdown-item' href='#' onclick='filterProducts("${category}")'>${category}</a></li>`;
+        });
+
+  menuElement.innerHTML = html;
+  }
+  buildMenu("clothing-menu", clothingList, "CLOTHING");
+  buildMenu("accessories-menu", accessoriesList, "ACCESSORIES");
+  buildMenu("bags-shoes-menu", bagsShoesList, "BAGS & SHOES");
+
   
-  // Create HTML for each unique category
-  const categoryHtml = uniqueCategories
-    .map(category => `<li><a class='dropdown-item' href='#' onclick='filterProducts("${category}")'>${category}</a></li>`)
-    .join("");
-  
-  // Replace the existing menu items with the generated ones
-  categoryMenu.innerHTML = categoryHtml;
 }
 
