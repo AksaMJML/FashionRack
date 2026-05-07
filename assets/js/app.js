@@ -73,10 +73,10 @@ function displayCart() {
                     <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">×</button>
                 </div>
                 <div class="d-flex justify-content-between align-items-center mt-2">
-                    <div class="input-group" style="width: 80px;">
-                        <button class="btn btn-sm btn-outline-secondary" onclick="updateQuantity(${index}, -1)">−</button>
-                        <input type="text" class="form-control text-center" value="${item.quantity}" readonly>
-                        <button class="btn btn-sm btn-outline-secondary" onclick="updateQuantity(${index}, 1)">+</button>
+                    <div style="display: flex; align-items: center; gap: 5px;">
+                        <button class="btn btn-sm btn-outline-secondary" style="width: 30px; padding: 2px;" onclick="updateQuantity(${index}, -1)">−</button>
+                        <input type="text" class="form-control text-center" value="${item.quantity}" readonly style="width: 40px; padding: 4px; font-weight: bold;">
+                        <button class="btn btn-sm btn-outline-secondary" style="width: 30px; padding: 2px;" onclick="updateQuantity(${index}, 1)">+</button>
                     </div>
                     <strong>$${itemTotal}</strong>
                 </div>
