@@ -225,6 +225,26 @@ function filterProducts(categoryName) {
     renderProducts(filteredItems);
 }
 
+
+function filterProductsByGroup(menuId) {
+    let filteredItems = [];
+    
+    
+    const menuGroups = {
+        "clothing-menu": ["TOPS", "SHIRTS", "JEANS", "SKIRTS", "BLAZERS", "SHORTS"],
+        "accessories-menu": ["JEWELLERY", "WATCHES", "HAIR ACCESSORIES", "WALLETS", "SUNGLASSES"],
+        "bags-shoes-menu": ["BAGS", "SHOES"]
+    };
+    
+    
+    const categoriesInGroup = menuGroups[menuId] || [];
+    
+    
+    filteredItems = inventory.filter(item => categoriesInGroup.includes(item.category));
+    
+    renderProducts(filteredItems);
+}
+
 function renderProducts(items) {
     const container = document.getElementById("product-list");
     let htmlString = "";
@@ -261,34 +281,39 @@ let cart = [ ];
 
 function populateCategoryMenu() {
 
+  
   const clothingList = ["TOPS" , "SHIRTS" , "JEANS", "SKIRTS", "BLAZERS", "SHORTS"];
   const accessoriesList = ["JEWELLERY", "WATCHES", "HAIR ACCESSORIES", "WALLETS", "SUNGLASSES"];
   const bagsShoesList = ["BAGS" , "SHOES"];
   
+  
   const inventoryCategories = [...new Set(inventory.map(item => item.category))];
   
-
+  
   function buildMenu(menuId, expectedList, title) {
         const menuElement = document.getElementById(menuId);
-        if (!menuElement) return;
+        if (!menuElement) return;  // Stop if menu doesn't exist
 
-  const availableCategories = expectedList.filter(cat => inventoryCategories.includes(cat));
+        
+        const availableCategories = expectedList.filter(cat => inventoryCategories.includes(cat));
 
-  let html = `
-            <li><a class='dropdown-item fw-bold text-primary' href='#' onclick='filterProducts("ALL")'>ALL ${title}</a></li>
+        
+        let html = `
+            <li><a class='dropdown-item fw-bold text-primary' href='#' onclick='filterProductsByGroup("${menuId}"); return false;'>ALL ${title}</a></li>
             <li><hr class="dropdown-divider"></li>
         `;
 
-  availableCategories.forEach(category => {
-            html += `<li><a class='dropdown-item' href='#' onclick='filterProducts("${category}")'>${category}</a></li>`;
+        
+        availableCategories.forEach(category => {
+            html += `<li><a class='dropdown-item' href='#' onclick='filterProducts("${category}"); return false;'>${category}</a></li>`;
         });
 
-  menuElement.innerHTML = html;
+        menuElement.innerHTML = html;
   }
+  
+  
   buildMenu("clothing-menu", clothingList, "CLOTHING");
   buildMenu("accessories-menu", accessoriesList, "ACCESSORIES");
   buildMenu("bags-shoes-menu", bagsShoesList, "BAGS & SHOES");
-
-  
 }
 
