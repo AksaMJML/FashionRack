@@ -104,6 +104,108 @@ let inventory = [
     color: "White",
     category: "TOPS",
     image: "assets/img/white.jpg"
+  },
+  // ===== ACCESSORIES CATEGORY =====
+  {
+    id: 10,
+    name: "Gold Chain Necklace",
+    price: 18.99,
+    color: "Gold",
+    category: "JEWELLERY",
+    image: "assets/img/necklace.jpg"
+  },
+  {
+    id: 11,
+    name: "Silver Bracelet",
+    price: 22.50,
+    color: "Silver",
+    category: "JEWELLERY",
+    image: "assets/img/bracelet.jpg"
+  },
+  {
+    id: 12,
+    name: "Classic Digital Watch",
+    price: 45.99,
+    color: "Black",
+    category: "WATCHES",
+    image: "assets/img/watch.jpg"
+  },
+  {
+    id: 13,
+    name: "Hair Clip Set",
+    price: 12.99,
+    color: "Multicolor",
+    category: "HAIR ACCESSORIES",
+    image: "assets/img/hair-clip.jpg"
+  },
+  {
+    id: 14,
+    name: "Leather Wallet",
+    price: 35.00,
+    color: "Brown",
+    category: "WALLETS",
+    image: "assets/img/wallet.jpg"
+  },
+  {
+    id: 15,
+    name: "UV Protection Sunglasses",
+    price: 55.00,
+    color: "Black",
+    category: "SUNGLASSES",
+    image: "assets/img/sunglasses.jpg"
+  },
+  // ===== BAGS CATEGORY =====
+  {
+    id: 16,
+    name: "Canvas Tote Bag",
+    price: 39.99,
+    color: "Beige",
+    category: "BAGS",
+    image: "assets/img/tote-bag.jpg"
+  },
+  {
+    id: 17,
+    name: "Black Crossbody Bag",
+    price: 49.50,
+    color: "Black",
+    category: "BAGS",
+    image: "assets/img/crossbody.jpg"
+  },
+  {
+    id: 18,
+    name: "Leather Handbag",
+    price: 75.00,
+    color: "Burgundy",
+    category: "BAGS",
+    image: "assets/img/handbag.jpg"
+  },
+  // ===== SHOES CATEGORY =====
+  {
+    id: 19,
+    name: "White Sneakers",
+    price: 65.00,
+    size: "M",
+    color: "White",
+    category: "SHOES",
+    image: "assets/img/sneakers.jpg"
+  },
+  {
+    id: 20,
+    name: "Black Formal Heels",
+    price: 55.00,
+    size: "S",
+    color: "Black",
+    category: "SHOES",
+    image: "assets/img/heels.jpg"
+  },
+  {
+    id: 21,
+    name: "Brown Leather Boots",
+    price: 85.00,
+    size: "M",
+    color: "Brown",
+    category: "SHOES",
+    image: "assets/img/boots.jpg"
   }
 ];
 
