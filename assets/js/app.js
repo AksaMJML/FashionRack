@@ -23,6 +23,100 @@ fetch("components/footer/footer.html")
         footerElement.innerHTML += data;
     });
 
+// ===== CART SYSTEM - DEFINE EARLY =====
+let cart = [ ];
+
+// Add to cart function
+function addToCart(productId) {
+    const product = inventory.find(item => item.id === productId);
+    if (!product) {
+        alert("Product not found!");
+        return;
+    }
+    
+    const existingCartItem = cart.find(item => item.id === productId);
+    if (existingCartItem) {
+        existingCartItem.quantity += 1;
+    } else {
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            category: product.category,
+            image: product.image,
+            quantity: 1
+        });
+    }
+    
+    displayCart();
+    calculateTotal();
+}
+
+// Display cart items
+function displayCart() {
+    const cartContainer = document.getElementById("cart-items");
+    if (cart.length === 0) {
+        cartContainer.innerHTML = '<p class="text-muted text-center mt-5">No items in cart</p>';
+        return;
+    }
+    
+    let cartHTML = "";
+    cart.forEach((item, index) => {
+        const itemTotal = (item.price * item.quantity).toFixed(2);
+        cartHTML += `
+            <div class="cart-item mb-3 pb-3 border-bottom">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1">${item.name}</h6>
+                        <small class="text-muted">$${item.price.toFixed(2)} each</small>
+                    </div>
+                    <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">×</button>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <div class="input-group" style="width: 80px;">
+                        <button class="btn btn-sm btn-outline-secondary" onclick="updateQuantity(${index}, -1)">−</button>
+                        <input type="text" class="form-control text-center" value="${item.quantity}" readonly>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="updateQuantity(${index}, 1)">+</button>
+                    </div>
+                    <strong>$${itemTotal}</strong>
+                </div>
+            </div>
+        `;
+    });
+    
+    cartContainer.innerHTML = cartHTML;
+}
+
+// Calculate total
+function calculateTotal() {
+    let total = 0;
+    cart.forEach(item => {
+        total += item.price * item.quantity;
+    });
+    
+    const totalElement = document.getElementById("cart-total");
+    totalElement.textContent = total.toFixed(2);
+}
+
+// Remove from cart
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    displayCart();
+    calculateTotal();
+}
+
+// Update quantity
+function updateQuantity(index, change) {
+    cart[index].quantity += change;
+    if (cart[index].quantity <= 0) {
+        removeFromCart(index);
+        return;
+    }
+    displayCart();
+    calculateTotal();
+}
+
+// ===== INVENTORY PRODUCTS =====
 let inventory = [
   {
     id: 1,
@@ -267,6 +361,8 @@ function renderProducts(items) {
     container.innerHTML = htmlString || '<p class="text-muted">No products found for this category.</p>';
 }
 
+
+
 document.addEventListener("click", (event) => {
     const filterElement = event.target.closest("[data-category-filter]");
     if (!filterElement) {
@@ -277,7 +373,7 @@ document.addEventListener("click", (event) => {
     filterProducts(filterElement.dataset.categoryFilter);
 });
 
-let cart = [ ];
+
 
 function populateCategoryMenu() {
 
