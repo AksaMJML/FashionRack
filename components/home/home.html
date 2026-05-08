@@ -1,6 +1,43 @@
 <main>
   <div class="album py-4 bg-body-tertiary">
         <div class="container-fluid px-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Add New Product</h5>
+                </div>
+                <div class="card-body">
+                    <form id="add-product-form" class="row g-3">
+                        <div class="col-md-6">
+                            <label for="product-name" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="product-name" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="product-price" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="product-price" step="0.01" min="0.01" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="product-category" class="form-label">Category</label>
+                            <input type="text" class="form-control" id="product-category" placeholder="TOPS" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="product-image" class="form-label">Image Path</label>
+                            <input type="text" class="form-control" id="product-image" placeholder="assets/img/new-product.jpg" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="product-size" class="form-label">Size (optional)</label>
+                            <input type="text" class="form-control" id="product-size" placeholder="M">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="product-color" class="form-label">Color (optional)</label>
+                            <input type="text" class="form-control" id="product-color" placeholder="Black">
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-dark">Add Product</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-8">
                     <h3 class="mb-3">Select Products</h3>

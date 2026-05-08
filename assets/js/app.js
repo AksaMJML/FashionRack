@@ -13,6 +13,7 @@ fetch("components/home/home.html")
     .then(data => {
         root.innerHTML += data;
         loadProducts();
+        setupAddProductForm();
     })
 
 let footerElement = document.getElementById("footer");
@@ -302,6 +303,78 @@ let inventory = [
     image: "assets/img/boots.jpg"
   }
 ];
+
+function getNextProductId() {
+    if (inventory.length === 0) {
+        return 1;
+    }
+
+    const biggestId = Math.max(...inventory.map(item => item.id));
+    return biggestId + 1;
+}
+
+function addProduct(productData) {
+    if (!productData || typeof productData !== "object") {
+        alert("Please provide product details.");
+        return;
+    }
+
+    const name = (productData.name || "").trim();
+    const category = (productData.category || "").trim().toUpperCase();
+    const image = (productData.image || "").trim();
+    const price = Number(productData.price);
+    const size = (productData.size || "").trim();
+    const color = (productData.color || "").trim();
+
+    if (!name || !category || !image || Number.isNaN(price) || price <= 0) {
+        alert("Name, category, image, and valid price are required.");
+        return;
+    }
+
+    const newProduct = {
+        id: getNextProductId(),
+        name,
+        price,
+        category,
+        image
+    };
+
+    if (size) {
+        newProduct.size = size;
+    }
+    if (color) {
+        newProduct.color = color;
+    }
+
+    inventory.push(newProduct);
+    populateCategoryMenu();
+    renderProducts(inventory);
+
+    alert(`Product added: ${newProduct.name}`);
+}
+
+function setupAddProductForm() {
+    const form = document.getElementById("add-product-form");
+    if (!form) {
+        return;
+    }
+
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const newProductData = {
+            name: document.getElementById("product-name").value,
+            price: document.getElementById("product-price").value,
+            category: document.getElementById("product-category").value,
+            image: document.getElementById("product-image").value,
+            size: document.getElementById("product-size").value,
+            color: document.getElementById("product-color").value
+        };
+
+        addProduct(newProductData);
+        form.reset();
+    });
+}
 
 
 function loadProducts(){
