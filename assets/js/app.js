@@ -24,6 +24,14 @@ fetch("components/footer/footer.html")
         footerElement.innerHTML += data;
     });
 
+let sideBar = document.getElementById("sideBar");
+
+fetch("components/sideBar/sodeBar.html")
+.then(response => response.text())
+.then(data => {
+    sideBar.innerHTML += data;
+})
+
 // ===== CART SYSTEM - DEFINE EARLY =====
 let cart = [ ];
 
