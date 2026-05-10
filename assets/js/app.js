@@ -425,23 +425,22 @@ function renderProducts(items) {
     let htmlString = "";
 
     items.forEach(item => {
+        // POS Style Card: Chinna image, button illai, motha card-um click aagum
         htmlString += `
           <div class="col">
-            <div class="card shadow-sm product-card"> 
-              <img src="${item.image}" class="card-img-top product-img" alt="${item.name}">
-              <div class="card-body d-flex flex-column">
-                <h5 class="card-title"> ${item.name} </h5>
-                <p class="card-text">Price: $${item.price.toFixed(2)}</p>
-                <button class="btn btn-dark w-100 mt-auto" onclick="addToCart(${item.id})">Add to Cart</button>
+            <div class="card shadow-sm h-100 border-0" onclick="addToCart(${item.id})" style="cursor: pointer; transition: 0.2s;" onmouseover="this.classList.add('shadow')" onmouseout="this.classList.remove('shadow')"> 
+              <img src="${item.image}" class="card-img-top" alt="${item.name}" style="height: 120px; object-fit: cover;">
+              <div class="card-body p-2 text-center bg-light">
+                <h6 class="card-title mb-1 text-truncate" style="font-size: 14px;" title="${item.name}">${item.name}</h6>
+                <p class="card-text fw-bold text-success mb-0">$${item.price.toFixed(2)}</p>
               </div>
             </div>
           </div>
         `;
     });
 
-    container.innerHTML = htmlString || '<p class="text-muted">No products found for this category.</p>';
+    container.innerHTML = htmlString || '<p class="text-muted col-12 text-center mt-4">No products found.</p>';
 }
-
 
 
 document.addEventListener("click", (event) => {
