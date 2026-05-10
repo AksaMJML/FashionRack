@@ -1,15 +1,24 @@
+body {
+    height: 100vh;
+    overflow: hidden; 
+}
+
 .product-card {
     height: 100%;
-    overflow: hidden; /* Zoom aagum pothu image card-a vittu veliya varama thadukka */
+    overflow: hidden; 
 }
 
 .product-img {
-    height: 280px; /* Ungalukku etha mathiri intha height-a mathikalam */
-    width: 100%;
-    object-fit: cover; /* Ithu thaan magic! Image-a stretch panna vidathu */
-    transition: transform 0.4s ease-in-out; /* Smooth-a move aaga */
+    height: 280px; 
+    object-fit: cover; 
+    transition: transform 0.4s ease-in-out; 
 }
 
 .product-card:hover .product-img {
-    transform: scale(1.08); /* 8% perusa zoom aagum */
+    transform: scale(1.08); 
+}
+
+#product-list {
+    height: 55vh; 
+    overflow-y: auto; 
 }

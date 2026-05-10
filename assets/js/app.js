@@ -1,5 +1,7 @@
 let navBar = document.getElementById("navBar")
 let root = document.getElementById("root")
+let currentPage = 1;
+const itemsPerPage = 8; 
 
 fetch("components/navBar/navbar.html")
     .then(response => response.text())
@@ -422,24 +424,55 @@ function filterProductsByGroup(menuId) {
 
 function renderProducts(items) {
     const container = document.getElementById("product-list");
-    let htmlString = "";
+    
+    // 1. Pagination Calculation
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedItems = items.slice(startIndex, endIndex);
 
-    items.forEach(item => {
-        // POS Style Card: Chinna image, button illai, motha card-um click aagum
+    // 2. Clear and Render Items
+    let htmlString = "";
+    paginatedItems.forEach(item => {
+        // "col" mattum use panrom, image height 160px aakki irukkom
         htmlString += `
           <div class="col">
-            <div class="card shadow-sm h-100 border-0" onclick="addToCart(${item.id})" style="cursor: pointer; transition: 0.2s;" onmouseover="this.classList.add('shadow')" onmouseout="this.classList.remove('shadow')"> 
-              <img src="${item.image}" class="card-img-top" alt="${item.name}" style="height: 120px; object-fit: cover;">
+            <div class="card shadow-sm border-0 h-100" onclick="addToCart(${item.id})" style="cursor: pointer;"> 
+              <img src="${item.image}" class="card-img-top" style="height: 160px; object-fit: cover; object-position: top;">
               <div class="card-body p-2 text-center bg-light">
-                <h6 class="card-title mb-1 text-truncate" style="font-size: 14px;" title="${item.name}">${item.name}</h6>
-                <p class="card-text fw-bold text-success mb-0">$${item.price.toFixed(2)}</p>
+                <h6 class="card-title mb-0 text-truncate" style="font-size: 14px;">${item.name}</h6>
+                <p class="text-success fw-bold mb-0 mt-1">$${item.price.toFixed(2)}</p>
               </div>
             </div>
           </div>
         `;
     });
+    container.innerHTML = htmlString || '<p class="text-center w-100 mt-4">No products found.</p>';
 
-    container.innerHTML = htmlString || '<p class="text-muted col-12 text-center mt-4">No products found.</p>';
+    // 3. Render Pagination Buttons
+    renderPaginationControls(items.length);
+}
+
+function renderPaginationControls(totalItems) {
+    const totalPages = Math.ceil(totalItems / itemsPerPage) || 1; 
+    let paginationHTML = `
+        <div class="d-flex justify-content-center w-100">
+            <button class="btn btn-outline-dark me-2" ${currentPage === 1 ? 'disabled' : ''} onclick="changePage(-1)">Prev</button>
+            <span class="align-self-center mx-3 fw-bold">Page ${currentPage} of ${totalPages}</span>
+            <button class="btn btn-outline-dark" ${currentPage === totalPages ? 'disabled' : ''} onclick="changePage(1)">Next</button>
+        </div>
+    `;
+    
+    // Namma HTML-la pudhusa add panna div-kulla "innerHTML" moolama ulla podrom!
+    const paginationContainer = document.getElementById("pagination-controls");
+    if (paginationContainer) {
+        paginationContainer.innerHTML = paginationHTML;
+    }
+}
+
+function changePage(step) {
+    currentPage += step;
+    // Current inventory filter-a vachu thirumba render panrom
+    loadProducts(); 
 }
 
 
