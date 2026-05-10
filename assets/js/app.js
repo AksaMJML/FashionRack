@@ -3,12 +3,6 @@ let root = document.getElementById("root")
 let currentPage = 1;
 const itemsPerPage = 8; 
 
-fetch("components/navBar/navbar.html")
-    .then(response => response.text())
-    .then(data => {
-        navBar.innerHTML += data;
-        populateCategoryMenu();
-    })
 
 fetch("components/home/home.html")
     .then(response => response.text())
@@ -393,32 +387,15 @@ function loadProducts(){
 
 loadProducts();
 
-function filterProducts(categoryName) {
-    const selectedCategory = (categoryName || "").trim().toUpperCase();
-    const filteredItems = selectedCategory && selectedCategory !== "ALL"
-        ? inventory.filter(item => item.category === selectedCategory)
-        : inventory;
-
-    renderProducts(filteredItems);
-}
-
-
-function filterProductsByGroup(menuId) {
-    let filteredItems = [];
+function searchProducts() {
+    const searchTerm = document.getElementById("pos-search").value.toLowerCase();
     
+    const filteredItems = inventory.filter(item => 
+        item.name.toLowerCase().includes(searchTerm) || 
+        item.category.toLowerCase().includes(searchTerm)
+    );
     
-    const menuGroups = {
-        "clothing-menu": ["TOPS", "SHIRTS", "JEANS", "SKIRTS", "BLAZERS", "SHORTS"],
-        "accessories-menu": ["JEWELLERY", "WATCHES", "HAIR ACCESSORIES", "WALLETS", "SUNGLASSES"],
-        "bags-shoes-menu": ["BAGS", "SHOES"]
-    };
-    
-    
-    const categoriesInGroup = menuGroups[menuId] || [];
-    
-    
-    filteredItems = inventory.filter(item => categoriesInGroup.includes(item.category));
-    
+    currentPage = 1; // Search pannum pothu 1st page-ku poyidanum
     renderProducts(filteredItems);
 }
 
