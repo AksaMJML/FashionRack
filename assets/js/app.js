@@ -24,9 +24,9 @@ fetch("components/footer/footer.html")
         footerElement.innerHTML += data;
     });
 
-let sideBar = document.getElementById("sideBar");
+let sideBar = document.getElementById("sidebar");
 
-fetch("components/sideBar/sodeBar.html")
+fetch("components/sidebar/sidebar.html")
 .then(response => response.text())
 .then(data => {
     sideBar.innerHTML += data;
