@@ -2,6 +2,8 @@ let navBar = document.getElementById("navBar")
 let root = document.getElementById("root")
 let currentPage = 1;
 const itemsPerPage = 8; 
+let editMode = false;
+let currentEditId = null;
 
 
 loadHomePage();
@@ -349,28 +351,50 @@ function addProduct(productData) {
 }
 
 function deleteProduct(productId) {
-    // Delete panra munnadi oru thadava user-kitta confirm pannuvom
     if (confirm("Are you sure you want to delete this product? 🗑️")) {
-        
-        // 1. Array-la antha product entha idathula (index) irukku nu thedurom
+       
         const index = inventory.findIndex(item => item.id === productId);
         
         if (index !== -1) {
-            // 2. Antha idathula irunthu 1 item-a thookurom (Delete)
             inventory.splice(index, 1);
-            
-            // 3. UI-a update panrom (Table matrum POS grid)
             renderAdminTable();
             renderProducts(inventory);
             populateCategoryMenu(); 
             
-            // Kadasila cart-layum antha item iruntha thookidanum (Optional but good for POS)
             cart = cart.filter(cartItem => cartItem.id !== productId);
             displayCart();
             calculateTotal();
         }
     }
 }
+
+function editProduct(productId) {
+    const product = inventory.find(item => item.id === productId);
+    if (!product) return;
+
+    document.getElementById("product-name").value = product.name;
+    document.getElementById("product-price").value = product.price;
+    document.getElementById("product-category").value = product.category;
+    document.getElementById("product-size").value = product.size || "";
+    document.getElementById("product-color").value = product.color || "";
+    
+    // --- PUDHU CODE: Image Preview kaata ---
+    const previewImg = document.getElementById("image-preview");
+    if (previewImg) {
+        previewImg.src = product.image; // Pazhaiya image-a set panrom
+        previewImg.style.display = "block"; // Hide aagiruntha veliya kaaturom
+    }
+    // ----------------------------------------
+
+    const submitBtn = document.querySelector("#add-product-form button[type='submit']");
+    submitBtn.textContent = "Update Product 🔄";
+    submitBtn.className = "btn btn-warning w-100"; 
+
+    editMode = true;
+    currentEditId = productId;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 
 function setupAddProductForm() {
     const form = document.getElementById("add-product-form");
@@ -379,37 +403,75 @@ function setupAddProductForm() {
     form.addEventListener("submit", (event) => {
         event.preventDefault();
 
-        // 1. Image File-a edukurom
         const imageInput = document.getElementById("product-image");
         const file = imageInput.files[0];
 
+        // 1. Image Logic: Pudhu file irunthaal read pannuvom
         if (file) {
-            // 2. File-a read panna FileReader use panrom
             const reader = new FileReader();
-            
             reader.onload = function(e) {
-                // e.target.result kulla image-oda data URL irukkum
-                const imageDataUrl = e.target.result; 
-
-                // 3. Matha data-voda serthu addProduct-kku anupurom
-                const newProductData = {
-                    name: document.getElementById("product-name").value,
-                    price: document.getElementById("product-price").value,
-                    category: document.getElementById("product-category").value,
-                    image: imageDataUrl, // Path-kku bathila image data
-                    size: document.getElementById("product-size").value,
-                    color: document.getElementById("product-color").value
-                };
-
-                addProduct(newProductData);
-                form.reset(); // Form-a clear panrom
+                saveProduct(e.target.result);
             };
-            
-            // Padathai data URL-aaga padikka solrom
             reader.readAsDataURL(file);
-            
-        } else {
+        } 
+        // File illai aana Edit Mode-na pazhaiya image-aye vachukkuvom
+        else if (editMode) {
+            const oldProduct = inventory.find(p => p.id === currentEditId);
+            saveProduct(oldProduct.image);
+        } 
+        else {
             alert("Please select an image!");
+        }
+
+        // 2. Data-va Save/Update panra main function
+        function saveProduct(imageData) {
+            const productData = {
+                name: document.getElementById("product-name").value,
+                price: document.getElementById("product-price").value,
+                category: document.getElementById("product-category").value,
+                image: imageData,
+                size: document.getElementById("product-size").value,
+                color: document.getElementById("product-color").value
+            };
+
+            if (editMode) {
+                // --- UPDATE LOGIC ---
+                const index = inventory.findIndex(p => p.id === currentEditId);
+                if (index !== -1) {
+                    inventory[index] = { 
+                        ...inventory[index], 
+                        ...productData, 
+                        price: Number(productData.price) 
+                    };
+                    alert("Product Updated Successfully! ✅");
+                }
+                
+                // Edit mode-a reset panrom
+                editMode = false;
+                currentEditId = null;
+                const submitBtn = form.querySelector("button[type='submit']");
+                submitBtn.textContent = "Add Product";
+                submitBtn.className = "btn btn-dark";
+            } 
+            else {
+                // --- ADD LOGIC ---
+                addProduct(productData);
+            }
+
+            // 3. UI Cleanup & Refresh (Common for both Add & Edit)
+            form.reset();
+            
+            // Preview image-a maraikkuroam
+            const previewImg = document.getElementById("image-preview");
+            if (previewImg) {
+                previewImg.style.display = "none";
+                previewImg.src = "";
+            }
+
+            // Ella charts matrum table-a refresh panroam
+            renderAdminTable();
+            renderProducts(inventory);
+            populateCategoryMenu();
         }
     });
 }

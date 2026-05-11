@@ -19,7 +19,12 @@
                 </div>
                 <div class="col-md-6">
                     <label for="product-image" class="form-label">Product Image</label>
-                    <input type="file" class="form-control" id="product-image" accept="image/*" required>
+                    <input type="file" class="form-control" id="product-image" accept="image/*">
+
+                    <div class="mt-2">
+                        <img id="image-preview" src="" alt="Current Image" style="max-height: 80px; display: none;"
+                            class="border rounded">
+                    </div>
                 </div>
                 <div class="col-md-3">
                     <label for="product-size" class="form-label">Size (optional)</label>
