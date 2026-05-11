@@ -350,24 +350,43 @@ function addProduct(productData) {
 
 function setupAddProductForm() {
     const form = document.getElementById("add-product-form");
-    if (!form) {
-        return;
-    }
+    if (!form) return;
 
     form.addEventListener("submit", (event) => {
         event.preventDefault();
 
-        const newProductData = {
-            name: document.getElementById("product-name").value,
-            price: document.getElementById("product-price").value,
-            category: document.getElementById("product-category").value,
-            image: document.getElementById("product-image").value,
-            size: document.getElementById("product-size").value,
-            color: document.getElementById("product-color").value
-        };
+        // 1. Image File-a edukurom
+        const imageInput = document.getElementById("product-image");
+        const file = imageInput.files[0];
 
-        addProduct(newProductData);
-        form.reset();
+        if (file) {
+            // 2. File-a read panna FileReader use panrom
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                // e.target.result kulla image-oda data URL irukkum
+                const imageDataUrl = e.target.result; 
+
+                // 3. Matha data-voda serthu addProduct-kku anupurom
+                const newProductData = {
+                    name: document.getElementById("product-name").value,
+                    price: document.getElementById("product-price").value,
+                    category: document.getElementById("product-category").value,
+                    image: imageDataUrl, // Path-kku bathila image data
+                    size: document.getElementById("product-size").value,
+                    color: document.getElementById("product-color").value
+                };
+
+                addProduct(newProductData);
+                form.reset(); // Form-a clear panrom
+            };
+            
+            // Padathai data URL-aaga padikka solrom
+            reader.readAsDataURL(file);
+            
+        } else {
+            alert("Please select an image!");
+        }
     });
 }
 
@@ -392,7 +411,7 @@ function searchProducts() {
 
 function renderProducts(items) {
     const container = document.getElementById("product-list");
-    
+    if (!container) return;
     // 1. Pagination Calculation
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -529,6 +548,6 @@ function loadProductsPage(event) {
             if (dashBtn) dashBtn.className = "nav-link text-dark";
             if (prodBtn) prodBtn.className = "nav-link active";
             
-            // Inga namma Admin Table load panra function-a appram poduvom!
+            setupAddProductForm();
         });
 }
