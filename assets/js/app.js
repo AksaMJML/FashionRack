@@ -344,8 +344,32 @@ function addProduct(productData) {
     inventory.push(newProduct);
     populateCategoryMenu();
     renderProducts(inventory);
-
+    renderAdminTable();
     alert(`Product added: ${newProduct.name}`);
+}
+
+function deleteProduct(productId) {
+    // Delete panra munnadi oru thadava user-kitta confirm pannuvom
+    if (confirm("Are you sure you want to delete this product? 🗑️")) {
+        
+        // 1. Array-la antha product entha idathula (index) irukku nu thedurom
+        const index = inventory.findIndex(item => item.id === productId);
+        
+        if (index !== -1) {
+            // 2. Antha idathula irunthu 1 item-a thookurom (Delete)
+            inventory.splice(index, 1);
+            
+            // 3. UI-a update panrom (Table matrum POS grid)
+            renderAdminTable();
+            renderProducts(inventory);
+            populateCategoryMenu(); 
+            
+            // Kadasila cart-layum antha item iruntha thookidanum (Optional but good for POS)
+            cart = cart.filter(cartItem => cartItem.id !== productId);
+            displayCart();
+            calculateTotal();
+        }
+    }
 }
 
 function setupAddProductForm() {
@@ -541,7 +565,8 @@ function loadProductsPage(event) {
         .then(response => response.text())
         .then(data => {
             root.innerHTML = data;
-            
+            setupAddProductForm();
+            renderAdminTable();
             
             let dashBtn = document.getElementById("nav-dashboard");
             let prodBtn = document.getElementById("nav-products");
@@ -550,4 +575,54 @@ function loadProductsPage(event) {
             
             setupAddProductForm();
         });
+}
+
+function renderAdminTable() {
+    const tableContainer = document.getElementById("admin-table-container");
+    if (!tableContainer) return; // Products page-la illana ithu run aagathu
+
+    let tableHTML = `
+        <div class="card shadow-sm">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0">Manage Inventory 📋</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Image</th>
+                            <th>Product Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    `;
+
+    inventory.forEach((item) => {
+        tableHTML += `
+            <tr>
+                <td>${item.id}</td>
+                <td><img src="${item.image}" alt="img" style="width: 40px; height: 40px; object-fit: cover;" class="rounded shadow-sm"></td>
+                <td class="fw-bold">${item.name}</td>
+                <td><span class="badge bg-info text-dark">${item.category}</span></td>
+                <td class="text-success fw-bold">$${item.price.toFixed(2)}</td>
+                <td class="text-center">
+                    <button class="btn btn-sm btn-outline-primary me-1" onclick="editProduct(${item.id})">✏️ Edit</button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteProduct(${item.id})">🗑️ Delete</button>
+                </td>
+            </tr>
+        `;
+    });
+
+    tableHTML += `
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
+
+    tableContainer.innerHTML = tableHTML;
 }
