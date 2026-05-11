@@ -4,13 +4,8 @@ let currentPage = 1;
 const itemsPerPage = 8; 
 
 
-fetch("components/home/home.html")
-    .then(response => response.text())
-    .then(data => {
-        root.innerHTML += data;
-        loadProducts();
-        setupAddProductForm();
-    })
+loadHomePage();
+
 
 let footerElement = document.getElementById("footer");
 
@@ -92,7 +87,6 @@ function displayCart() {
     cartContainer.innerHTML = cartHTML;
 }
 
-// Calculate total
 function calculateTotal() {
     let total = 0;
     cart.forEach(item => {
@@ -103,14 +97,12 @@ function calculateTotal() {
     totalElement.textContent = total.toFixed(2);
 }
 
-// Remove from cart
 function removeFromCart(index) {
     cart.splice(index, 1);
     displayCart();
     calculateTotal();
 }
 
-// Update quantity
 function updateQuantity(index, change) {
     cart[index].quantity += change;
     if (cart[index].quantity <= 0) {
@@ -121,7 +113,6 @@ function updateQuantity(index, change) {
     calculateTotal();
 }
 
-// ===== INVENTORY PRODUCTS =====
 let inventory = [
   {
     id: 1,
@@ -503,3 +494,41 @@ function populateCategoryMenu() {
   buildMenu("bags-shoes-menu", bagsShoesList, "BAGS & SHOES");
 }
 
+function loadHomePage(event) {
+    if(event) event.preventDefault(); 
+    
+    let root = document.getElementById("root");
+    
+    fetch("components/home/home.html")
+        .then(response => response.text())
+        .then(data => {
+            root.innerHTML = data; 
+            loadProducts(); 
+            
+            
+            let dashBtn = document.getElementById("nav-dashboard");
+            let prodBtn = document.getElementById("nav-products");
+            if (dashBtn) dashBtn.className = "nav-link active";
+            if (prodBtn) prodBtn.className = "nav-link text-dark";
+        });
+}
+
+function loadProductsPage(event) {
+    if(event) event.preventDefault();
+    console.log("Products button click aagirukku! 🚀");
+    let root = document.getElementById("root");
+    
+    fetch("components/products/products.html")
+        .then(response => response.text())
+        .then(data => {
+            root.innerHTML = data;
+            
+            
+            let dashBtn = document.getElementById("nav-dashboard");
+            let prodBtn = document.getElementById("nav-products");
+            if (dashBtn) dashBtn.className = "nav-link text-dark";
+            if (prodBtn) prodBtn.className = "nav-link active";
+            
+            // Inga namma Admin Table load panra function-a appram poduvom!
+        });
+}
