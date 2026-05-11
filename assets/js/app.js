@@ -1,7 +1,7 @@
 let navBar = document.getElementById("navBar")
 let root = document.getElementById("root")
 let currentPage = 1;
-const itemsPerPage = 8; 
+const itemsPerPage = 8;
 let editMode = false;
 let currentEditId = null;
 
@@ -20,13 +20,13 @@ fetch("components/footer/footer.html")
 let sideBar = document.getElementById("sidebar");
 
 fetch("components/sidebar/sidebar.html")
-.then(response => response.text())
-.then(data => {
-    sideBar.innerHTML += data;
-})
+    .then(response => response.text())
+    .then(data => {
+        sideBar.innerHTML += data;
+    })
 
 // ===== CART SYSTEM - DEFINE EARLY =====
-let cart = [ ];
+let cart = [];
 
 // Add to cart function
 function addToCart(productId) {
@@ -35,7 +35,7 @@ function addToCart(productId) {
         alert("Product not found!");
         return;
     }
-    
+
     const existingCartItem = cart.find(item => item.id === productId);
     if (existingCartItem) {
         existingCartItem.quantity += 1;
@@ -49,7 +49,7 @@ function addToCart(productId) {
             quantity: 1
         });
     }
-    
+
     displayCart();
     calculateTotal();
 }
@@ -61,7 +61,7 @@ function displayCart() {
         cartContainer.innerHTML = '<p class="text-muted text-center mt-5">No items in cart</p>';
         return;
     }
-    
+
     let cartHTML = "";
     cart.forEach((item, index) => {
         const itemTotal = (item.price * item.quantity).toFixed(2);
@@ -85,7 +85,7 @@ function displayCart() {
             </div>
         `;
     });
-    
+
     cartContainer.innerHTML = cartHTML;
 }
 
@@ -94,7 +94,7 @@ function calculateTotal() {
     cart.forEach(item => {
         total += item.price * item.quantity;
     });
-    
+
     const totalElement = document.getElementById("cart-total");
     totalElement.textContent = total.toFixed(2);
 }
@@ -116,189 +116,189 @@ function updateQuantity(index, change) {
 }
 
 let inventory = [
-  {
-    id: 1,
-    name: "Classic Black Blouse",
-    price: 24.99,
-    size: "M",
-    color: "Black",
-    category: "TOPS",
-    image: "assets/img/1.jpg" 
-  },
-  {
-    id: 2,
-    name: "Khaki Casual Blazer",
-    price: 45.00,
-    size: "L",
-    color: "Khaki",
-    category: "BLAZERS",
-    image: "assets/img/2.jpg"
-  },
-  {
-    id: 3,
-    name: "Beige Button-Down Dress",
-    price: 35.50,
-    size: "S",
-    color: "Beige",
-    category: "DRESSES",
-    image: "assets/img/3.jpg"
-  },
-  {
-    id: 4,
-    name: "Light Blue Office Shirt",
-    price: 29.99,
-    size: "M",
-    color: "Blue",
-    category: "SHIRTS",
-    image: "assets/img/4.jpg"
-  },
-  {
-    id: 5,
-    name: "Dusty Pink Basic Top",
-    price: 15.99,
-    size: "M",
-    color: "Pink",
-    category: "TOPS",
-    image: "assets/img/5.jpg"
-  },
-  {
-    id: 6,
-    name: "Navy Blue Pleated Skirt",
-    price: 32.00,
-    size: "S",
-    color: "Navy",
-    category: "SKIRTS",
-    image: "assets/img/6.jpg"
-  },
-  {
-    id: 7,
-    name: "Floral Midi Skirt",
-    price: 28.50,
-    size: "L",
-    color: "Floral",
-    category: "SKIRTS",
-    image: "assets/img/7.jpg"
-  },
-  {
-    id: 8,
-    name: "Brown Polo Shirt",
-    price: 19.99,
-    size: "M",
-    color: "Brown",
-    category: "SHIRTS",
-    image: "assets/img/brown.jpg"
-  },
-  {
-    id: 9,
-    name: "Essential White T-Shirt",
-    price: 12.99,
-    size: "S",
-    color: "White",
-    category: "TOPS",
-    image: "assets/img/white.jpg"
-  },
-  // ===== ACCESSORIES CATEGORY =====
-  {
-    id: 10,
-    name: "Gold Chain Necklace",
-    price: 18.99,
-    color: "Gold",
-    category: "JEWELLERY",
-    image: "assets/img/necklace.jpg"
-  },
-  {
-    id: 11,
-    name: "Silver Bracelet",
-    price: 22.50,
-    color: "Silver",
-    category: "JEWELLERY",
-    image: "assets/img/bracelet.jpg"
-  },
-  {
-    id: 12,
-    name: "Classic Digital Watch",
-    price: 45.99,
-    color: "Black",
-    category: "WATCHES",
-    image: "assets/img/watch.jpg"
-  },
-  {
-    id: 13,
-    name: "Hair Clip Set",
-    price: 12.99,
-    color: "Multicolor",
-    category: "HAIR ACCESSORIES",
-    image: "assets/img/hair-clip.jpg"
-  },
-  {
-    id: 14,
-    name: "Leather Wallet",
-    price: 35.00,
-    color: "Brown",
-    category: "WALLETS",
-    image: "assets/img/wallet.jpg"
-  },
-  {
-    id: 15,
-    name: "UV Protection Sunglasses",
-    price: 55.00,
-    color: "Black",
-    category: "SUNGLASSES",
-    image: "assets/img/sunglasses.jpg"
-  },
-  // ===== BAGS CATEGORY =====
-  {
-    id: 16,
-    name: "Canvas Tote Bag",
-    price: 39.99,
-    color: "Beige",
-    category: "BAGS",
-    image: "assets/img/tote-bag.jpg"
-  },
-  {
-    id: 17,
-    name: "Black Crossbody Bag",
-    price: 49.50,
-    color: "Black",
-    category: "BAGS",
-    image: "assets/img/crossbody.jpg"
-  },
-  {
-    id: 18,
-    name: "Leather Handbag",
-    price: 75.00,
-    color: "Burgundy",
-    category: "BAGS",
-    image: "assets/img/handbag.jpg"
-  },
-  // ===== SHOES CATEGORY =====
-  {
-    id: 19,
-    name: "White Sneakers",
-    price: 65.00,
-    size: "M",
-    color: "White",
-    category: "SHOES",
-    image: "assets/img/sneakers.jpg"
-  },
-  {
-    id: 20,
-    name: "Black Formal Heels",
-    price: 55.00,
-    size: "S",
-    color: "Black",
-    category: "SHOES",
-    image: "assets/img/heels.jpg"
-  },
-  {
-    id: 21,
-    name: "Brown Leather Boots",
-    price: 85.00,
-    size: "M",
-    color: "Brown",
-    category: "SHOES",
-    image: "assets/img/boots.jpg"
-  }
+    {
+        id: 1,
+        name: "Classic Black Blouse",
+        price: 24.99,
+        size: "M",
+        color: "Black",
+        category: "TOPS",
+        image: "assets/img/1.jpg"
+    },
+    {
+        id: 2,
+        name: "Khaki Casual Blazer",
+        price: 45.00,
+        size: "L",
+        color: "Khaki",
+        category: "BLAZERS",
+        image: "assets/img/2.jpg"
+    },
+    {
+        id: 3,
+        name: "Beige Button-Down Dress",
+        price: 35.50,
+        size: "S",
+        color: "Beige",
+        category: "DRESSES",
+        image: "assets/img/3.jpg"
+    },
+    {
+        id: 4,
+        name: "Light Blue Office Shirt",
+        price: 29.99,
+        size: "M",
+        color: "Blue",
+        category: "SHIRTS",
+        image: "assets/img/4.jpg"
+    },
+    {
+        id: 5,
+        name: "Dusty Pink Basic Top",
+        price: 15.99,
+        size: "M",
+        color: "Pink",
+        category: "TOPS",
+        image: "assets/img/5.jpg"
+    },
+    {
+        id: 6,
+        name: "Navy Blue Pleated Skirt",
+        price: 32.00,
+        size: "S",
+        color: "Navy",
+        category: "SKIRTS",
+        image: "assets/img/6.jpg"
+    },
+    {
+        id: 7,
+        name: "Floral Midi Skirt",
+        price: 28.50,
+        size: "L",
+        color: "Floral",
+        category: "SKIRTS",
+        image: "assets/img/7.jpg"
+    },
+    {
+        id: 8,
+        name: "Brown Polo Shirt",
+        price: 19.99,
+        size: "M",
+        color: "Brown",
+        category: "SHIRTS",
+        image: "assets/img/brown.jpg"
+    },
+    {
+        id: 9,
+        name: "Essential White T-Shirt",
+        price: 12.99,
+        size: "S",
+        color: "White",
+        category: "TOPS",
+        image: "assets/img/white.jpg"
+    },
+    // ===== ACCESSORIES CATEGORY =====
+    {
+        id: 10,
+        name: "Gold Chain Necklace",
+        price: 18.99,
+        color: "Gold",
+        category: "JEWELLERY",
+        image: "assets/img/necklace.jpg"
+    },
+    {
+        id: 11,
+        name: "Silver Bracelet",
+        price: 22.50,
+        color: "Silver",
+        category: "JEWELLERY",
+        image: "assets/img/bracelet.jpg"
+    },
+    {
+        id: 12,
+        name: "Classic Digital Watch",
+        price: 45.99,
+        color: "Black",
+        category: "WATCHES",
+        image: "assets/img/watch.jpg"
+    },
+    {
+        id: 13,
+        name: "Hair Clip Set",
+        price: 12.99,
+        color: "Multicolor",
+        category: "HAIR ACCESSORIES",
+        image: "assets/img/hair-clip.jpg"
+    },
+    {
+        id: 14,
+        name: "Leather Wallet",
+        price: 35.00,
+        color: "Brown",
+        category: "WALLETS",
+        image: "assets/img/wallet.jpg"
+    },
+    {
+        id: 15,
+        name: "UV Protection Sunglasses",
+        price: 55.00,
+        color: "Black",
+        category: "SUNGLASSES",
+        image: "assets/img/sunglasses.jpg"
+    },
+    // ===== BAGS CATEGORY =====
+    {
+        id: 16,
+        name: "Canvas Tote Bag",
+        price: 39.99,
+        color: "Beige",
+        category: "BAGS",
+        image: "assets/img/tote-bag.jpg"
+    },
+    {
+        id: 17,
+        name: "Black Crossbody Bag",
+        price: 49.50,
+        color: "Black",
+        category: "BAGS",
+        image: "assets/img/crossbody.jpg"
+    },
+    {
+        id: 18,
+        name: "Leather Handbag",
+        price: 75.00,
+        color: "Burgundy",
+        category: "BAGS",
+        image: "assets/img/handbag.jpg"
+    },
+    // ===== SHOES CATEGORY =====
+    {
+        id: 19,
+        name: "White Sneakers",
+        price: 65.00,
+        size: "M",
+        color: "White",
+        category: "SHOES",
+        image: "assets/img/sneakers.jpg"
+    },
+    {
+        id: 20,
+        name: "Black Formal Heels",
+        price: 55.00,
+        size: "S",
+        color: "Black",
+        category: "SHOES",
+        image: "assets/img/heels.jpg"
+    },
+    {
+        id: 21,
+        name: "Brown Leather Boots",
+        price: 85.00,
+        size: "M",
+        color: "Brown",
+        category: "SHOES",
+        image: "assets/img/boots.jpg"
+    }
 ];
 
 function getNextProductId() {
@@ -352,15 +352,15 @@ function addProduct(productData) {
 
 function deleteProduct(productId) {
     if (confirm("Are you sure you want to delete this product? 🗑️")) {
-       
+
         const index = inventory.findIndex(item => item.id === productId);
-        
+
         if (index !== -1) {
             inventory.splice(index, 1);
             renderAdminTable();
             renderProducts(inventory);
-            populateCategoryMenu(); 
-            
+            populateCategoryMenu();
+
             cart = cart.filter(cartItem => cartItem.id !== productId);
             displayCart();
             calculateTotal();
@@ -377,7 +377,7 @@ function editProduct(productId) {
     document.getElementById("product-category").value = product.category;
     document.getElementById("product-size").value = product.size || "";
     document.getElementById("product-color").value = product.color || "";
-    
+
     // --- PUDHU CODE: Image Preview kaata ---
     const previewImg = document.getElementById("image-preview");
     if (previewImg) {
@@ -388,7 +388,7 @@ function editProduct(productId) {
 
     const submitBtn = document.querySelector("#add-product-form button[type='submit']");
     submitBtn.textContent = "Update Product 🔄";
-    submitBtn.className = "btn btn-warning w-100"; 
+    submitBtn.className = "btn btn-warning w-100";
 
     editMode = true;
     currentEditId = productId;
@@ -409,16 +409,16 @@ function setupAddProductForm() {
         // 1. Image Logic: Pudhu file irunthaal read pannuvom
         if (file) {
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 saveProduct(e.target.result);
             };
             reader.readAsDataURL(file);
-        } 
+        }
         // File illai aana Edit Mode-na pazhaiya image-aye vachukkuvom
         else if (editMode) {
             const oldProduct = inventory.find(p => p.id === currentEditId);
             saveProduct(oldProduct.image);
-        } 
+        }
         else {
             alert("Please select an image!");
         }
@@ -438,21 +438,21 @@ function setupAddProductForm() {
                 // --- UPDATE LOGIC ---
                 const index = inventory.findIndex(p => p.id === currentEditId);
                 if (index !== -1) {
-                    inventory[index] = { 
-                        ...inventory[index], 
-                        ...productData, 
-                        price: Number(productData.price) 
+                    inventory[index] = {
+                        ...inventory[index],
+                        ...productData,
+                        price: Number(productData.price)
                     };
                     alert("Product Updated Successfully! ✅");
                 }
-                
+
                 // Edit mode-a reset panrom
                 editMode = false;
                 currentEditId = null;
                 const submitBtn = form.querySelector("button[type='submit']");
                 submitBtn.textContent = "Add Product";
                 submitBtn.className = "btn btn-dark";
-            } 
+            }
             else {
                 // --- ADD LOGIC ---
                 addProduct(productData);
@@ -460,7 +460,7 @@ function setupAddProductForm() {
 
             // 3. UI Cleanup & Refresh (Common for both Add & Edit)
             form.reset();
-            
+
             // Preview image-a maraikkuroam
             const previewImg = document.getElementById("image-preview");
             if (previewImg) {
@@ -477,7 +477,7 @@ function setupAddProductForm() {
 }
 
 
-function loadProducts(){
+function loadProducts() {
     renderProducts(inventory);
 }
 
@@ -485,12 +485,12 @@ loadProducts();
 
 function searchProducts() {
     const searchTerm = document.getElementById("pos-search").value.toLowerCase();
-    
-    const filteredItems = inventory.filter(item => 
-        item.name.toLowerCase().includes(searchTerm) || 
+
+    const filteredItems = inventory.filter(item =>
+        item.name.toLowerCase().includes(searchTerm) ||
         item.category.toLowerCase().includes(searchTerm)
     );
-    
+
     currentPage = 1; // Search pannum pothu 1st page-ku poyidanum
     renderProducts(filteredItems);
 }
@@ -526,7 +526,7 @@ function renderProducts(items) {
 }
 
 function renderPaginationControls(totalItems) {
-    const totalPages = Math.ceil(totalItems / itemsPerPage) || 1; 
+    const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
     let paginationHTML = `
         <div class="d-flex justify-content-center w-100">
             <button class="btn btn-outline-dark me-2" ${currentPage === 1 ? 'disabled' : ''} onclick="changePage(-1)">Prev</button>
@@ -534,7 +534,7 @@ function renderPaginationControls(totalItems) {
             <button class="btn btn-outline-dark" ${currentPage === totalPages ? 'disabled' : ''} onclick="changePage(1)">Next</button>
         </div>
     `;
-    
+
     // Namma HTML-la pudhusa add panna div-kulla "innerHTML" moolama ulla podrom!
     const paginationContainer = document.getElementById("pagination-controls");
     if (paginationContainer) {
@@ -545,7 +545,7 @@ function renderPaginationControls(totalItems) {
 function changePage(step) {
     currentPage += step;
     // Current inventory filter-a vachu thirumba render panrom
-    loadProducts(); 
+    loadProducts();
 }
 
 
@@ -563,54 +563,54 @@ document.addEventListener("click", (event) => {
 
 function populateCategoryMenu() {
 
-  
-  const clothingList = ["TOPS" , "SHIRTS" , "JEANS", "SKIRTS", "BLAZERS", "SHORTS"];
-  const accessoriesList = ["JEWELLERY", "WATCHES", "HAIR ACCESSORIES", "WALLETS", "SUNGLASSES"];
-  const bagsShoesList = ["BAGS" , "SHOES"];
-  
-  
-  const inventoryCategories = [...new Set(inventory.map(item => item.category))];
-  
-  
-  function buildMenu(menuId, expectedList, title) {
+
+    const clothingList = ["TOPS", "SHIRTS", "JEANS", "SKIRTS", "BLAZERS", "SHORTS"];
+    const accessoriesList = ["JEWELLERY", "WATCHES", "HAIR ACCESSORIES", "WALLETS", "SUNGLASSES"];
+    const bagsShoesList = ["BAGS", "SHOES"];
+
+
+    const inventoryCategories = [...new Set(inventory.map(item => item.category))];
+
+
+    function buildMenu(menuId, expectedList, title) {
         const menuElement = document.getElementById(menuId);
         if (!menuElement) return;  // Stop if menu doesn't exist
 
-        
+
         const availableCategories = expectedList.filter(cat => inventoryCategories.includes(cat));
 
-        
+
         let html = `
             <li><a class='dropdown-item fw-bold text-primary' href='#' onclick='filterProductsByGroup("${menuId}"); return false;'>ALL ${title}</a></li>
             <li><hr class="dropdown-divider"></li>
         `;
 
-        
+
         availableCategories.forEach(category => {
             html += `<li><a class='dropdown-item' href='#' onclick='filterProducts("${category}"); return false;'>${category}</a></li>`;
         });
 
         menuElement.innerHTML = html;
-  }
-  
-  
-  buildMenu("clothing-menu", clothingList, "CLOTHING");
-  buildMenu("accessories-menu", accessoriesList, "ACCESSORIES");
-  buildMenu("bags-shoes-menu", bagsShoesList, "BAGS & SHOES");
+    }
+
+
+    buildMenu("clothing-menu", clothingList, "CLOTHING");
+    buildMenu("accessories-menu", accessoriesList, "ACCESSORIES");
+    buildMenu("bags-shoes-menu", bagsShoesList, "BAGS & SHOES");
 }
 
 function loadHomePage(event) {
-    if(event) event.preventDefault(); 
-    
+    if (event) event.preventDefault();
+
     let root = document.getElementById("root");
-    
+
     fetch("components/home/home.html")
         .then(response => response.text())
         .then(data => {
-            root.innerHTML = data; 
-            loadProducts(); 
-            
-            
+            root.innerHTML = data;
+            loadProducts();
+
+
             let dashBtn = document.getElementById("nav-dashboard");
             let prodBtn = document.getElementById("nav-products");
             if (dashBtn) dashBtn.className = "nav-link active";
@@ -619,29 +619,35 @@ function loadHomePage(event) {
 }
 
 function loadProductsPage(event) {
-    if(event) event.preventDefault();
-    console.log("Products button click aagirukku! 🚀");
+    if (event) event.preventDefault();
     let root = document.getElementById("root");
-    
+
     fetch("components/products/products.html")
         .then(response => response.text())
         .then(data => {
             root.innerHTML = data;
+
+            currentPage = 1;
             setupAddProductForm();
             renderAdminTable();
-            
+
             let dashBtn = document.getElementById("nav-dashboard");
             let prodBtn = document.getElementById("nav-products");
             if (dashBtn) dashBtn.className = "nav-link text-dark";
             if (prodBtn) prodBtn.className = "nav-link active";
-            
-            setupAddProductForm();
+
         });
 }
 
 function renderAdminTable() {
     const tableContainer = document.getElementById("admin-table-container");
-    if (!tableContainer) return; // Products page-la illana ithu run aagathu
+    if (!tableContainer) return;
+
+    // --- 1. Pagination Math ---
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    // Pura inventory badhila, pirikkapatta items-a mattum edukurom
+    const paginatedItems = inventory.slice(startIndex, endIndex);
 
     let tableHTML = `
         <div class="card shadow-sm">
@@ -663,7 +669,8 @@ function renderAdminTable() {
                     <tbody>
     `;
 
-    inventory.forEach((item) => {
+    // --- 2. Pirichatha Vachu Table Podurom ---
+    paginatedItems.forEach((item) => {
         tableHTML += `
             <tr>
                 <td>${item.id}</td>
@@ -687,4 +694,40 @@ function renderAdminTable() {
     `;
 
     tableContainer.innerHTML = tableHTML;
+
+    // --- 3. Buttons-a Render Panna Call Panrom ---
+    renderAdminPagination(inventory.length);
+}
+
+function renderAdminPagination(totalItems) {
+    const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
+    let paginationHTML = `
+    <div class="d-flex justify-content-center w-100">
+        <button type="button" class="btn btn-outline-secondary me-2" ${currentPage === 1 ? 'disabled' : ''} onclick="changeAdminPage(-1)">Prev</button>
+        <span class="align-self-center mx-3 fw-bold">Page ${currentPage} of ${totalPages}</span>
+        <button type="button" class="btn btn-outline-secondary" ${currentPage === totalPages ? 'disabled' : ''} onclick="changeAdminPage(1)">Next</button>
+    </div>
+`;
+
+    const paginationContainer = document.getElementById("admin-pagination-controls");
+    if (paginationContainer) {
+        paginationContainer.innerHTML = paginationHTML;
+    }
+}
+
+function changeAdminPage(step) {
+    console.log("Button click aachu! Pazhaiya page:", currentPage);
+    currentPage += step;
+    console.log("Pudhu page:", currentPage);
+    renderAdminTable(); 
+}
+
+function changeAdminPage(step) {
+    currentPage += step;
+    renderAdminTable(); // POS-a refresh pannama, Table-a mattum refresh pannum!
+}
+
+function changeAdminPage(step) {
+    currentPage += step;
+    renderAdminTable();
 }
