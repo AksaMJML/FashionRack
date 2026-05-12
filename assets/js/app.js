@@ -724,3 +724,102 @@ function changeAdminPage(step) {
     renderAdminTable(); 
     window.scrollTo({ top: 0, behavior: 'smooth' }); // Change aagum pothu mela pogum
 }
+
+function processPayment() {
+    // 1. Cart empty-ah irundha thadukanum
+    if (cart.length === 0) {
+        alert("Cart empty-ah irukku! Products-a add pannunga. 🛒");
+        return;
+    }
+
+    let total = document.getElementById("cart-total").textContent;
+
+    // 2. Hidden Iframe create panrom (Ithu thaan direct print-ku help pannum)
+    let iframe = document.createElement('iframe');
+    iframe.style.position = 'absolute';
+    iframe.style.width = '0px';
+    iframe.style.height = '0px';
+    iframe.style.border = 'none';
+    document.body.appendChild(iframe);
+
+    // 3. Receipt Design (Centered and Professional)
+    let receiptHTML = `
+        <html>
+        <head>
+            <style>
+                @page { size: auto; margin: 0mm; }
+                body { 
+                    font-family: 'Courier New', Courier, monospace; 
+                    width: 80mm; /* Standard Receipt Width */
+                    margin: 0 auto; /* Content-a center panrom */
+                    padding: 20px;
+                    text-align: center;
+                }
+                .header { border-bottom: 1px dashed #000; padding-bottom: 10px; margin-bottom: 10px; }
+                .item-row { display: flex; justify-content: space-between; margin: 5px 0; font-size: 14px; }
+                .total-row { 
+                    border-top: 1px dashed #000; 
+                    margin-top: 10px; 
+                    padding-top: 10px; 
+                    font-weight: bold; 
+                    font-size: 18px; 
+                    display: flex; 
+                    justify-content: space-between;
+                }
+                .footer { margin-top: 20px; font-size: 12px; border-top: 1px solid #eee; padding-top: 10px; }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h2 style="margin:0;">FashionRack 👗</h2>
+                <p style="margin:5px 0;">No. 123, Fashion Street, City</p>
+                <small>${new Date().toLocaleString()}</small>
+            </div>
+            
+            <div id="items-list">
+                ${cart.map(item => `
+                    <div class="item-row">
+                        <span>${item.name} (x${item.quantity})</span>
+                        <span>$${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `).join('')}
+            </div>
+
+            <div class="total-row">
+                <span>TOTAL:</span>
+                <span>$${total}</span>
+            </div>
+
+            <div class="footer">
+                <p>Thank you for shopping! ✅</p>
+                <p>Visit again!</p>
+            </div>
+        </body>
+        </html>
+    `;
+
+    // 4. Iframe-kulla content-a ezhuthuroam
+    let doc = iframe.contentWindow.document;
+    doc.open();
+    doc.write(receiptHTML);
+    doc.close();
+
+    // 5. Print Trigger
+    setTimeout(() => {
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
+        
+        // Print mudinjathum iframe-a thookiduvom
+        document.body.removeChild(iframe);
+        
+        // Cart-a clear panrom
+        clearCart();
+    }, 500);
+}
+
+function clearCart() {
+    cart = []; // Array-a empty panrom
+    displayCart(); // UI-a refresh panrom
+    calculateTotal(); // Total-a 0.00 nu mathurom
+    alert("Payment Successful! Cart cleared. 💸");
+}
