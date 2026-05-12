@@ -4,7 +4,7 @@ let currentPage = 1;
 const itemsPerPage = 8;
 let editMode = false;
 let currentEditId = null;
-
+let orders = [];
 
 loadHomePage();
 
@@ -734,6 +734,14 @@ function processPayment() {
 
     let total = document.getElementById("cart-total").textContent;
 
+    const newOrder = {
+        id: "#ORD-" + Math.floor(1000 + Math.random() * 9000), // Random ID
+        date: new Date().toLocaleString(),
+        items: [...cart], // Cart-la irukkuratha apdiye copy panrom
+        total: total
+    };
+    orders.unshift(newOrder);
+
     // 2. Hidden Iframe create panrom (Ithu thaan direct print-ku help pannum)
     let iframe = document.createElement('iframe');
     iframe.style.position = 'absolute';
@@ -822,4 +830,65 @@ function clearCart() {
     displayCart(); // UI-a refresh panrom
     calculateTotal(); // Total-a 0.00 nu mathurom
     alert("Payment Successful! Cart cleared. 💸");
+}
+
+// 1. Orders Page-a load panna
+function loadOrdersPage(event) {
+    if (event) event.preventDefault();
+    let root = document.getElementById("root");
+
+    fetch("components/orders/orders.html")
+        .then(response => response.text())
+        .then(data => {
+            root.innerHTML = data;
+            currentPage = 1;
+            renderOrdersTable();
+
+            // Nav highlight
+            document.querySelectorAll(".nav-link").forEach(btn => btn.classList.remove("active"));
+            let ordBtn = document.getElementById("nav-orders");
+            if (ordBtn) ordBtn.classList.add("active");
+        });
+}
+
+// 2. Orders Table-a render panna
+function renderOrdersTable() {
+    const container = document.getElementById("orders-table-container");
+    if (!container) return;
+
+    if (orders.length === 0) {
+        container.innerHTML = '<div class="p-5 text-center text-muted">No orders found yet.</div>';
+        return;
+    }
+
+    let tableHTML = `
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Date & Time</th>
+                    <th>Items Count</th>
+                    <th>Total Amount</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    orders.forEach(order => {
+        tableHTML += `
+            <tr>
+                <td class="fw-bold text-primary">${order.id}</td>
+                <td>${order.date}</td>
+                <td>${order.items.length} items</td>
+                <td class="fw-bold text-success">$${order.total}</td>
+                <td class="text-center">
+                    <button class="btn btn-sm btn-outline-dark">👁️ View Details</button>
+                </td>
+            </tr>
+        `;
+    });
+
+    tableHTML += `</tbody></table>`;
+    container.innerHTML = tableHTML;
 }
