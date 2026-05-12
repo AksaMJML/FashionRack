@@ -1,14 +1,24 @@
 body {
-    height: 100vh;
-    overflow: hidden; 
+    /* overflow: hidden-a thookidunga */
+    min-height: 100vh;
     margin: 0;
     overflow-x: hidden;
+    background-color: #f8f9fa; /* bg-light background */
 }
 
 #root {
-    min-height: 100vh;
+    /* Height-a auto-va vachukalam appo thaan content-kku thontha mathiri scroll aagum */
+    min-height: calc(100vh - 60px); 
     display: flex;
     flex-direction: column;
+}
+
+/* Sidebar-a oru idathula fix panni vachikalam (Sticky) */
+#sidebar {
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
 }
 
 .product-card {

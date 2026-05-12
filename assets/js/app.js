@@ -626,17 +626,16 @@ function loadProductsPage(event) {
         .then(response => response.text())
         .then(data => {
             root.innerHTML = data;
-            window.scrollTo(0, 0);
-
+            window.scrollTo(0, 0); // Reset scroll to top
             currentPage = 1;
             setupAddProductForm();
             renderAdminTable();
 
+            // Nav highlight logic
             let dashBtn = document.getElementById("nav-dashboard");
             let prodBtn = document.getElementById("nav-products");
             if (dashBtn) dashBtn.className = "nav-link text-dark";
             if (prodBtn) prodBtn.className = "nav-link active";
-
         });
 }
 
@@ -703,12 +702,16 @@ function renderAdminTable() {
 function renderAdminPagination(totalItems) {
     const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
     let paginationHTML = `
-    <div class="d-flex justify-content-center w-100">
-        <button type="button" class="btn btn-outline-secondary me-2" ${currentPage === 1 ? 'disabled' : ''} onclick="changeAdminPage(-1)">Prev</button>
-        <span class="align-self-center mx-3 fw-bold">Page ${currentPage} of ${totalPages}</span>
-        <button type="button" class="btn btn-outline-secondary" ${currentPage === totalPages ? 'disabled' : ''} onclick="changeAdminPage(1)">Next</button>
-    </div>
-`;
+        <div class="d-flex justify-content-center align-items-center gap-3">
+            <button type="button" class="btn btn-outline-dark" ${currentPage === 1 ? 'disabled' : ''} onclick="changeAdminPage(-1)">
+                &laquo; Prev
+            </button>
+            <span class="fw-bold">Page ${currentPage} of ${totalPages}</span>
+            <button type="button" class="btn btn-outline-dark" ${currentPage === totalPages ? 'disabled' : ''} onclick="changeAdminPage(1)">
+                Next &raquo;
+            </button>
+        </div>
+    `;
 
     const paginationContainer = document.getElementById("admin-pagination-controls");
     if (paginationContainer) {
@@ -717,18 +720,7 @@ function renderAdminPagination(totalItems) {
 }
 
 function changeAdminPage(step) {
-    console.log("Button click aachu! Pazhaiya page:", currentPage);
     currentPage += step;
-    console.log("Pudhu page:", currentPage);
     renderAdminTable(); 
-}
-
-function changeAdminPage(step) {
-    currentPage += step;
-    renderAdminTable(); // POS-a refresh pannama, Table-a mattum refresh pannum!
-}
-
-function changeAdminPage(step) {
-    currentPage += step;
-    renderAdminTable();
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Change aagum pothu mela pogum
 }
