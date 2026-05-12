@@ -883,7 +883,7 @@ function renderOrdersTable() {
                 <td>${order.items.length} items</td>
                 <td class="fw-bold text-success">$${order.total}</td>
                 <td class="text-center">
-                    <button class="btn btn-sm btn-outline-dark">👁️ View Details</button>
+                    <button class="btn btn-sm btn-outline-dark" onclick="viewOrderDetails('${order.id}')">👁️ View Details</button>
                 </td>
             </tr>
         `;
@@ -891,4 +891,48 @@ function renderOrdersTable() {
 
     tableHTML += `</tbody></table>`;
     container.innerHTML = tableHTML;
+}
+
+function viewOrderDetails(orderId) {
+    // 1. Click panna order-a array-la irunthu theduroam
+    const order = orders.find(o => o.id === orderId);
+    if (!order) return;
+
+    // 2. Modal-kulla varavendiya content-a HTML-a uruvaakurom
+    let modalHTML = `
+        <div class="mb-3 pb-2 border-bottom">
+            <strong>Order ID:</strong> <span class="text-primary">${order.id}</span><br>
+            <small class="text-muted"><strong>Date:</strong> ${order.date}</small>
+        </div>
+        <ul class="list-group mb-3 shadow-sm">
+    `;
+
+    // Order-kulla irukka items-a loop panni list-la add panrom
+    order.items.forEach(item => {
+        let itemTotal = (item.price * item.quantity).toFixed(2);
+        modalHTML += `
+            <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                    <h6 class="my-0">${item.name}</h6>
+                    <small class="text-muted">Qty: ${item.quantity} x $${item.price.toFixed(2)}</small>
+                </div>
+                <span class="text-muted fw-bold">$${itemTotal}</span>
+            </li>
+        `;
+    });
+
+    modalHTML += `
+        </ul>
+        <div class="d-flex justify-content-between align-items-center bg-light p-2 rounded border">
+            <span class="fs-5 fw-bold">Grand Total:</span>
+            <span class="fs-4 text-success fw-bold">$${order.total}</span>
+        </div>
+    `;
+
+    // 3. HTML-a modal body-kulla thallurom
+    document.getElementById("orderModalBody").innerHTML = modalHTML;
+
+    // 4. Bootstrap JS use panni Modal-a screen-la kaaturom
+    let myModal = new bootstrap.Modal(document.getElementById('orderModal'));
+    myModal.show();
 }
