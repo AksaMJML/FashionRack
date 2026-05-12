@@ -626,6 +626,7 @@ function loadProductsPage(event) {
         .then(response => response.text())
         .then(data => {
             root.innerHTML = data;
+            window.scrollTo(0, 0);
 
             currentPage = 1;
             setupAddProductForm();
