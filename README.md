@@ -1,4 +1,4 @@
-# FashionRack 👗🛒
+<img width="1902" height="980" alt="image" src="https://github.com/user-attachments/assets/0bafe066-e439-45af-8e01-646c1eeb673d" /># FashionRack 👗🛒
 **A Lightweight POS & Inventory Management System**
 
 FashionRack is a fully functional, frontend-only Point of Sale (POS) and Inventory Management web application designed specifically for retail clothing and fashion accessory stores. Built with a clean, fixed-layout UI, it provides a seamless experience for billing, managing products, and tracking sales history.
@@ -24,9 +24,9 @@ FashionRack is a fully functional, frontend-only Point of Sale (POS) and Invento
 
 *(Tip: Upload your screenshots to your repo and replace these placeholder links!)*
 
-* **POS Dashboard:** ![Dashboard Screenshot](link_to_your_dashboard_image.png)
-* **Inventory Management:** ![Inventory Screenshot](link_to_your_inventory_image.png)
-* **Order History & Receipt Modal:** ![Orders Screenshot](link_to_your_orders_image.png)
+* **POS Dashboard:** ![Dashboard Screenshot]("C:\Users\Aksa\OneDrive\Pictures\Screenshots\ds.png")
+* **Inventory Management:** ![Inventory Screenshot]("C:\Users\Aksa\OneDrive\Pictures\Screenshots\inv.png")
+* **Order History & Receipt Modal:** ![Orders Screenshot]("C:\Users\Aksa\OneDrive\Pictures\Screenshots\ord.png")
 
 ## 🚀 How to Run Locally
 
