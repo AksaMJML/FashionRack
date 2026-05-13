@@ -22,8 +22,6 @@ FashionRack is a fully functional, frontend-only Point of Sale (POS) and Invento
 
 ## 📸 Screenshots
 
-*(Tip: Upload your screenshots to your repo and replace these placeholder links!)*
-
 * **POS Dashboard:** ![Dashboard Screenshot]("C:\Users\Aksa\OneDrive\Pictures\Screenshots\ds.png")
 * **Inventory Management:** ![Inventory Screenshot]("C:\Users\Aksa\OneDrive\Pictures\Screenshots\inv.png")
 * **Order History & Receipt Modal:** ![Orders Screenshot]("C:\Users\Aksa\OneDrive\Pictures\Screenshots\ord.png")
